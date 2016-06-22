@@ -24,7 +24,7 @@ public class Model {
 	public void start() {
 		int bwidth = def.getWidth();
 		int bheight = def.getHeight();
-		ball = new Ball(gwidth/2-10, gheight/3 - 10, 20, 20);
+		ball = new Ball(gwidth/2-10, gheight/3 + 20, 20, 20);
 		bat = new Bat(gwidth/2 - 80, gheight - 40, 160, 20);
 		for(int y = 0; y < gheight / 3; y+= bheight) {
 			for(int x = 0; x < gwidth; x+= bwidth) {
@@ -142,52 +142,37 @@ public class Model {
 				int x, y;
 				x = i / bwidth;
 				y = j / bheight;
-				if(!b[x][y].isGone() &&// von unten
-				   ball.getY() <= b[x][y].getY() + bheight &&
-				   ball.getY() >= b[x][y].getY() &&
-				   ball.getX() + ball.getWidth() >= b[x][y].getX() &&
-				   ball.getX() <= b[x][y].getX() + bwidth){
+				
+			if(vonLinks(x, y)){  
+				touchesBrick[0] = x;
+				touchesBrick[1] = y;
+				touchesBrick[2] = 1;
+				System.out.println(touchesBrick[2]+"");
+				return touchesBrick;	
+				
+			}else if(vonRechts(x, y)){ 
+				
+				touchesBrick[0] = x;
+				touchesBrick[1] = y;
+				touchesBrick[2] = 1;
+				System.out.println(touchesBrick[2]+"");
+				return touchesBrick;
+			
+			}else if(vonUnten(x, y)){
 					
 					touchesBrick[0] = x;
 					touchesBrick[1] = y;
 					touchesBrick[2] = 2;
+					System.out.println(touchesBrick[2]+"");
 					return touchesBrick;
 							
-				}else if(!b[x][y].isGone() && // von oben
-						 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
-						 ball.getY() <= b[x][y].getY() + bheight &&
-						 ball.getX() + ball.getWidth() >= b[x][y].getX() &&
-						 ball.getX() <= b[x][y].getX() + bwidth){
+				}else if(vonOben(x, y)){
 					
 					touchesBrick[0] = x;
 					touchesBrick[1] = y;
 					touchesBrick[2] = 2;
+					System.out.println(touchesBrick[2]+"");
 					return touchesBrick;
-															
-				}else if(!b[x][y].isGone() &&	// von links
-						 ball.getX() + ball.getWidth() >= b[x][y].getX() &&
-						 ball.getX() + ball.getWidth() <= b[x][y].getX() +  bwidth &&
-						 
-						 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
-						 ball.getY() <= b[x][y].getY() + bheight ){  
-					
-					touchesBrick[0] = x;
-					touchesBrick[1] = y;
-					touchesBrick[2] = 1;
-					return touchesBrick;
-					
-				}else if(!b[x][y].isGone() && 			// von rechts
-						 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
- 						 ball.getY() <= b[x][y].getY() + bheight &&
-						 
-						 ball.getX() <= b[x][y].getX() + bwidth &&
-						 ball.getX() >= b[x][y].getX()){ 
-					
-					touchesBrick[0] = x;
-					touchesBrick[1] = y;
-					touchesBrick[2] = 1;
-					return touchesBrick;
-				
 				}
 			}
 		}
@@ -259,5 +244,38 @@ public class Model {
 			}
 		}
 		return false;
+	}
+	
+	public boolean vonLinks(int x, int y) {
+		return !b[x][y].isGone() &&
+			   ball.getX() + ball.getWidth() >= b[x][y].getX() &&
+			   ball.getX() + ball.getWidth() <= b[x][y].getX() +  bwidth &&
+			   ball.getY() + ball.getHeight() >= b[x][y].getY() &&
+			   ball.getY() <= b[x][y].getY() + bheight;
+	}
+	
+	public boolean vonRechts(int x, int y) {
+		return !b[x][y].isGone() &&
+				 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
+				 ball.getY() <= b[x][y].getY() + bheight &&
+				 
+				 ball.getX() <= b[x][y].getX() + bwidth &&
+				 ball.getX() >= b[x][y].getX();
+	}
+	
+	public boolean vonOben(int x, int y) {
+		return !b[x][y].isGone() &&
+		 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
+		 ball.getY() <= b[x][y].getY() + bheight &&
+		 ball.getX() + ball.getWidth() >= b[x][y].getX() &&
+		 ball.getX() <= b[x][y].getX() + bwidth;
+	}
+	
+	public boolean vonUnten(int x, int y) {
+		 return !b[x][y].isGone() &&
+		   ball.getY() <= b[x][y].getY() + bheight &&
+		   ball.getY() >= b[x][y].getY() &&
+		   ball.getX() + ball.getWidth() >= b[x][y].getX() &&
+		   ball.getX() <= b[x][y].getX() + bwidth;
 	}
 }
