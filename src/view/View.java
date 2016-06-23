@@ -8,86 +8,109 @@ import model.Brick;
 import model.Component;
 import model.Model;
 import controller.Controller.MyButtonListener;
+import controller.Controller.MyEndDialogListener;
 import controller.Controller.MyKeyListener;
 import controller.Controller.MyWindowAdapter;
-
+/**
+ * class to draw all frames and dialogs
+ * @author Maximilian Heinze
+ * 
+ */
 public class View {
 	
 	private MenuFrame mf;
 	private GameFrame gf;
-//	private ManualFrame manf;
+	private ManualFrame manf;
 	private Model model;
 	
 	public View(Model model){
 		this.model = model;
 		mf = new MenuFrame();
 	}
-	
+	/**
+	 * @author Maximilian Heinze
+	 * @return
+	 */
 	public int getWidth()
 	{
 		return mf.getWidth();
 	}
-	
+	/**
+	 * @author Maximilian Heinze
+	 */
 	public int getHeight()
 	{
 		return mf.getHeight();
 	}
-	
+	/**
+	 * author Maximilian Heinze
+	 */
 	public void changeToGameFrame()
 	{
 		gf = mf.changeToGameFrame();
 	}
 	
-//	public void changeToManualFrame()
-//	{
-//		manf = mf.changeToManualFrame();
-//	}
-	
+	/**
+	 * @author Maximilian Heinze
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public void drawBat(int x, int y, int width, int height)
 	{
 		gf.drawBat(x, y, width, height);
 	}
-	
+	/**
+	 * @author Maximilian Heinze
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public void drawBrick(int x, int y, int width, int height)
 	{
 		gf.drawBrick(x, y, width, height);
 	}
-	
+	/**
+	 * @author Maximilian Heinze
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public void drawBall(int x, int y, int width, int height)
 	{
 		gf.drawBall(x, y, width, height);
 	}
-	
-	public void drawBallBlack(int x, int y, int width, int height)
-	{
-		gf.drawBallBlack(x, y, width, height);
-	}
-	
-	public void drawBrickBlack(int x, int y, int width, int height)
-	{
-		gf.drawBrickBlack(x, y, width, height);
-	}
-	
+	/**
+	 * @author Maximilian Heinze
+	 * @param keyL
+	 */
 	public void addKeyListener(MyKeyListener keyL)
 	{
 		gf.addMyKeyListener(keyL);
 	}
-	
+	/**
+	 * @author Maximilian Heinze
+	 * @param winA
+	 */
 	public void addWindowAdapter(MyWindowAdapter winA)
 	{
 		mf.addMyWindowListener(winA);
 	}
-	
-	public void gameOver()
-	{
-		gf.gameOver();
-	}
-	
+	/**
+	 * @author Maximilian Heinze	
+	 * @param mbl
+	 */
 	public void setButtonsListener(MyButtonListener mbl)
 	{
 		mf.setButtonsListener(mbl);
 	}
-	
+	/**
+	 * @author Tim Möschl, René Marton, Maximilian Heinze, Julius Knoller
+	 * takes the elements of the array and looks whether it's a ball, a brick, or a bat and draws it.
+	 */
 	public void drawListElements()
 	{
 		gf.emptyContentPane();
@@ -111,4 +134,30 @@ public class View {
 			}
 		}
 	}
+	/**
+	 * @author Maximilian Heinze
+	 * @param medl
+	 */
+	public GameOverDialog addListenerOnGameOverDialogButtons(MyEndDialogListener medl)
+	{
+		return gf.addListenerOnGameOverDialogButtons(medl);
+	}
+	/**
+	 * @author Maximilian Heinze
+	 * @param medl
+	 */
+	public GameWonDialog addListenerOnGameWonDialogButtons(MyEndDialogListener medl)
+	{
+		return gf.addListenerOnGameWonDialogButtons(medl);
+	}
+	/**
+	 * Method to open a JDialog which says whether you have won or not
+	 * @author Maximilian Heinze
+	 * @param gameWon
+	 */
+	public void showGameFinDialog(boolean gameWon)
+	{
+		gf.showGameFinDialog(gameWon);
+	}
+	
 }

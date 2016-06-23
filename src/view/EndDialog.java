@@ -16,8 +16,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-public class EndDialog extends JDialog {
+/**
+ * Opens the Dialog when you want to close the Game in the Menuframe.
+ * @author maximilian.heinze
+ *
+ */
+public class EndDialog extends JDialog 
+{
 	
 	private final JPanel contentPanel = new JPanel();
 	private JLabel txtWollenSieDas;
@@ -28,7 +33,8 @@ public class EndDialog extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		try {
 			EndDialog dialog = new EndDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -40,6 +46,7 @@ public class EndDialog extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @author Maximilian Heinze
 	 */
 	public EndDialog() 
 	{
@@ -86,8 +93,13 @@ public class EndDialog extends JDialog {
 		}
 		setVisible(true);
 	}
-	
-	public void addActionListener(ActionListener listener){
+	/**
+	 * adds a Buttonlistener to the JButtons of the EndDialog.
+	 * @author Maximilian Heinze
+	 * @param listener
+	 */
+	public void addActionListener(ActionListener listener)
+	{
 		okButton.addActionListener(listener);
 		cancelButton.addActionListener(listener);
 	}

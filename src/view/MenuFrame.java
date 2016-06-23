@@ -14,13 +14,17 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller.MyButtonListener;
 import controller.Controller.MyKeyListener;
 import controller.Controller.MyWindowAdapter;
-
+/**
+ * 
+ * @author maximilian.heinze
+ *
+ */
 public class MenuFrame extends JFrame {
 
 	private JPanel contentPane;
 	
-	private int width = 800;
-	private int height = 800;
+	private int width = 807;
+	private int height = 807;
 	private JButton endButton = new JButton("Beenden");
 	private JButton startButton = new JButton("Spiel Starten");
 	private JButton manualButton = new JButton("Anleitung");

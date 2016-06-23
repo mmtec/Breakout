@@ -12,6 +12,8 @@ import javax.swing.JButton;
 
 import model.Model;
 import view.EndDialog;
+import view.GameOverDialog;
+import view.GameWonDialog;
 import view.View;
 
 /**
@@ -29,7 +31,12 @@ public class Controller
 	 */
 	private Model model;
 	private View view;
+	final Controller controller;
 	private Timer timer;
+	private final int timerFrequence = 35;
+	
+	private GameWonDialog gwd;
+	private GameOverDialog god;
 	
 	/**
 	 * @date 09.05.2016
@@ -38,10 +45,11 @@ public class Controller
 	public Controller()
 	{
 		model = new Model();
-		view = new View(model);		
+		view = new View(model);	
 		timer = new Timer();
 		view.addWindowAdapter(new MyWindowAdapter());
 		view.setButtonsListener(new MyButtonListener());
+		controller = this;		
 	}
 	
 	/**
@@ -63,17 +71,11 @@ public class Controller
 				{
 					case KeyEvent.VK_RIGHT:
 						vk_right_pressed = true;
-//						while(vk_right_pressed)
-//						{
-							model.moveBat(true, 10);
-//						}
+							model.moveBat(true, 20);
 						break;
 					case KeyEvent.VK_LEFT:
 						vk_right_pressed = true;
-//						while(vk_right_pressed)
-//						{
-							model.moveBat(false, 10);
-//						}
+							model.moveBat(false, 20);
 						break;
 				}
 		}
@@ -88,19 +90,13 @@ public class Controller
 			{
 				case KeyEvent.VK_RIGHT:
 					vk_right_pressed = true;
-//					while(vk_right_pressed)
-//					{
-						model.moveBat(true, 10);
+						model.moveBat(true, 20);
 						wait(10);
-//					}
 					break;
 				case KeyEvent.VK_LEFT:
 				vk_left_pressed = true;
-//				while(vk_left_pressed)
-//				{
-					model.moveBat(false, 10);
+					model.moveBat(false, 20);
 					wait(10);
-//				}
 					break;
 			}
 		}
@@ -139,8 +135,6 @@ public class Controller
 		}		
 	}
 	
-	
-	
 	/**
 	 * 
 	 * @date 12.05.2016, 05.06.2016
@@ -163,7 +157,7 @@ public class Controller
 	 * @date 12.05.2016, 05.06.2016
 	 */
 	public class MyButtonListener implements ActionListener
-	{
+	{		
 		public void actionPerformed(ActionEvent ae)
 		{
 			switch(((JButton)ae.getSource()).getText())
@@ -173,7 +167,7 @@ public class Controller
 					view.addKeyListener(new MyKeyListener());
 					model.start();
 					//Start at the beginning, then run every 30 ms.
-					timer.schedule(new MyTask(model, view), 0, 50);
+					timer.schedule(new MyTask(controller, model, view), 0, timerFrequence);
 					break;
 			
 				case "Anleitung":
@@ -188,6 +182,47 @@ public class Controller
 		}
 	}
 	
+	public class MyEndDialogListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent ae)
+		{
+			switch(((JButton)ae.getSource()).getText())
+			{
+			case "Neues Spiel starten":
+				model.start();
+//				view.disposeDialog();
+				timer = new Timer();
+				timer.schedule(new MyTask(controller, model, view), 1000, timerFrequence);							
+				break;
+				
+			case "Spiel Beenden":
+				System.exit(0);
+				break;
+			}
+		}
+	}
 	
+	/**
+	 * @date 22.06.2016
+	 */
+	public void addListenerOnGameOverDialogButtons()	
+	{
+		god = view.addListenerOnGameOverDialogButtons(new MyEndDialogListener());	
+	}
 	
+	/**
+	 * @date 22.06.2016
+	 */
+	public void addListenerOnGameWonDialogButtons()
+	{
+		gwd = view.addListenerOnGameWonDialogButtons(new MyEndDialogListener());
+	}
+
+	/**
+	 * @date 23.06.2016
+	 */
+	public void endTask(){
+		timer.cancel();
+		timer.purge();
+	}
 }
