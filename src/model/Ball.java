@@ -2,8 +2,8 @@ package model;
 
 public class Ball extends Component {
 
-	private int vx = -3;
-	private int vy = -3;
+	private int vx = -5;
+	private int vy = -5;
 	
 	public Ball(int x, int y, int width, int height) {
 		super(x, y, width, height);

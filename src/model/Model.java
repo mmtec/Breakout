@@ -26,10 +26,10 @@ public class Model {
 		int bheight = def.getHeight();
 		ball = new Ball(gwidth/2-10, gheight/3 + 20, 20, 20);
 		bat = new Bat(gwidth/2 - 80, gheight - 40, 160, 20);
-		for(int y = 0; y < gheight / 3; y+= bheight) {
-			for(int x = 0; x < gwidth; x+= bwidth) {
-				b[x/bwidth][y/bheight] = new Brick(x, y, 80, 30);
-				list.add(b[x/bwidth][y/bheight]);
+		for(int y = 0; y < gheight / 3; y+= bheight+10) {
+			for(int x = 0; x < gwidth; x+= bwidth+10) {
+				b[x/(bwidth+10)][y/(bheight+10)] = new Brick(x, y, 80, 30);
+				list.add(b[x/(bwidth+10)][y/(bheight+10)]);
 			}
 		}
 		list.add(ball);
@@ -137,11 +137,11 @@ public class Model {
 	public int[] touchesBrick(){
 		int[] touchesBrick = new int[3];
 		
-		for(int i = 0; i < gwidth; i += bwidth){
- 			for(int j = 0; j < gheight/3; j += bheight){
+		for(int i = 0; i < gwidth; i += bwidth + 10){
+ 			for(int j = 0; j < gheight/3; j += bheight+ 10){
 				int x, y;
-				x = i / bwidth;
-				y = j / bheight;
+				x = i / (bwidth+10);
+				y = j / (bheight+10);
 				
 			if(vonLinks(x, y)){  
 				touchesBrick[0] = x;
@@ -198,10 +198,10 @@ public class Model {
 	 */
 	public void refresh() {
 		int x, y;
-		for(int j = 0; j < gheight/3; j += bheight) {
-			for(int i = 0; i < gwidth; i += bwidth) {
-				x = i/bwidth;
-				y = j/bheight;
+		for(int j = 0; j < gheight/3; j += bheight + 10) {
+			for(int i = 0; i < gwidth; i += bwidth + 10) {
+				x = i/(bwidth+10);
+				y = j/(bheight+10);
 				if(!b[x][y].isGone()) {
 					list.add(b[x][y]);
 			}
@@ -236,9 +236,12 @@ public class Model {
 	 * @return boolean Es gibt noch Bricks
 	 */
 	public boolean anyBricksLeft() {
-		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 10; j++) {
-				if(!b[i][j].isGone()) {
+		for(int i = 0; i < gwidth; i += bwidth + 10){
+ 			for(int j = 0; j < gheight/3; j += bheight + 10){
+				int x, y;
+				x = i / (bwidth + 10);
+				y = j / (bheight + 10);
+				if(!b[x][y].isGone()) {
 					return true;
 				}
 			}
@@ -247,34 +250,68 @@ public class Model {
 	}
 	
 	public boolean vonLinks(int x, int y) {
+		int ballxawidth = ball.getX() + ball.getWidth();
+		int brickx = b[x][y].getX();
 		return !b[x][y].isGone() &&
-			   ball.getX() + ball.getWidth() >= b[x][y].getX() &&
-			   ball.getX() + ball.getWidth() <= b[x][y].getX() +  bwidth &&
+//			   ball.getX() + ball.getWidth() >= b[x][y].getX() &&
+//			   ball.getX() + ball.getWidth() <= b[x][y].getX() +  bwidth &&
+			   (ballxawidth == brickx ||
+			   ballxawidth == brickx + 1 ||
+			   ballxawidth == brickx + 2 ||
+//			   ballxawidth == brickx + 3 ||
+			   ballxawidth == brickx - 1 ||
+			   ballxawidth == brickx - 2) &&
+			   
 			   ball.getY() + ball.getHeight() >= b[x][y].getY() &&
 			   ball.getY() <= b[x][y].getY() + bheight;
 	}
 	
 	public boolean vonRechts(int x, int y) {
+		int ballx = ball.getX();
+		int brickxawidth = b[x][y].getX() + b[x][y].getWidth();
 		return !b[x][y].isGone() &&
-				 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
-				 ball.getY() <= b[x][y].getY() + bheight &&
-				 
-				 ball.getX() <= b[x][y].getX() + bwidth &&
-				 ball.getX() >= b[x][y].getX();
+				  (ballx  == brickxawidth  ||
+				   ballx  == brickxawidth - 1 ||
+				   ballx  == brickxawidth - 2 ||
+//	         	   ballx  == brickxawidth - 3 ||
+				   ballx  == brickxawidth + 1 ||
+				   ballx  == brickxawidth + 2) &&
+				
+				   ball.getY() + ball.getHeight() >= b[x][y].getY() &&
+				   ball.getY() <= b[x][y].getY() + bheight;
+				  
+//				 ball.getX() <= b[x][y].getX() + bwidth &&
+//				 ball.getX() >= b[x][y].getX();
 	}
 	
 	public boolean vonOben(int x, int y) {
+		int bricky = b[x][y].getY();
+		int ballyaheight = ball.getY() + ball.getHeight();
 		return !b[x][y].isGone() &&
-		 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
-		 ball.getY() <= b[x][y].getY() + bheight &&
+//		 ball.getY() + ball.getHeight() >= b[x][y].getY() &&
+//		 ball.getY() <= b[x][y].getY() + bheight &&
+		 (ballyaheight == bricky ||
+		 ballyaheight == bricky + 1 ||
+		 ballyaheight == bricky + 2 ||
+//		 ballyaheight == bricky + 3 ||
+		 ballyaheight == bricky - 1 ||
+		 ballyaheight == bricky - 2) &&
 		 ball.getX() + ball.getWidth() >= b[x][y].getX() &&
 		 ball.getX() <= b[x][y].getX() + bwidth;
 	}
 	
 	public boolean vonUnten(int x, int y) {
-		 return !b[x][y].isGone() &&
-		   ball.getY() <= b[x][y].getY() + bheight &&
-		   ball.getY() >= b[x][y].getY() &&
+		int bally = ball.getY();
+		int brickyaheight = b[x][y].getY() + b[x][y].getHeight();
+		return !b[x][y].isGone() &&
+//		   ball.getY() <= b[x][y].getY() + bheight &&
+//		   ball.getY() >= b[x][y].getY() &&
+		   (bally == brickyaheight ||
+		   bally == brickyaheight - 1 ||
+		   bally == brickyaheight - 2 ||
+//		   bally == brickyaheight - 3 ||
+		   bally == brickyaheight + 1 ||
+		   bally == brickyaheight + 2) &&
 		   ball.getX() + ball.getWidth() >= b[x][y].getX() &&
 		   ball.getX() <= b[x][y].getX() + bwidth;
 	}
