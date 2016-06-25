@@ -5,35 +5,42 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 
-import controller.Controller.MyEndDialogListener;
-import controller.Controller.MyKeyListener;
 import view.components.BallDisplay;
 import view.components.BatDisplay;
 import view.components.BrickDisplay;
+import controller.Controller.MyEndDialogListener;
+import controller.Controller.MyKeyListener;
 /**
  * class to create a Gameframe where you play the game.
  * @author Maximilian Heinze
  *
  */
-public class GameFrame extends JFrame {
-	private int width = 807; // Breite = 1000
-	private int height = 807; // Höhe = 1000
+public class GameFrame {
+	private JFrame frame;
+	private int width = 807;
+	private int height = 807;
 	private Graphics g;
 	private GameWonDialog gameIsWon;
 	private GameOverDialog gameIsLost;
+	private GamePanel gp;
+	private boolean isGameOverDialogShown, isGameWonDialogShown;
 	
 	public GameFrame(){
-		setTitle("GAME");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(width, height);	// Setzt die Größe des JFrames auf
-								// die gewünschten Werte
-		getContentPane().setBackground(Color.BLACK); //Setzt den Hintergrund auf Schwarz
-		g = getGraphics();
-		setResizable(false);
-		setVisible(true);
+		frame = new JFrame();
+		gp = new GamePanel();
+		frame.setContentPane(gp);
+		frame.setTitle("GAME");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(width, height);
+		gp.setBackground(Color.BLACK);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		
 	}
+	
 	/**
-	 * 
+	 * Method to draw a Brick 
+	 * @author Maximilian Heinze, Julius Knoller
 	 * @param x
 	 * @param y
 	 * @param width
@@ -41,27 +48,25 @@ public class GameFrame extends JFrame {
 	 */
 	public void drawBrick(int x, int y, int width, int height)
 	{
-//		super.paint(g);
-//		g.setColor(new Color(255,255,255));
-//		g.drawRect(x, y, width, height);
-//		//Zeichnet die Bricks. Farbe ist weiß
-		getContentPane().add(new BrickDisplay(x, y, width, height));
-		revalidate(); //Proved
-		repaint();  // Proved
+		gp.drawBrick(x, y, width, height);
 	}
 	
+	/**
+	 * Method to draw the Ball
+	 * @author Maximilian Heinze, Julius Knoller
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
 	public void drawBall(int x, int y, int width, int height)
 	{
-//		super.paint(g);
-//		g.setColor(new Color(255,255,255));
-//		g.drawOval(x, y, width, height);
-//		//Zeichnet den Ball. Farbe ist weiß
-		getContentPane().add(new BallDisplay(x, y, width, height));
-		revalidate();
-		repaint();
+		gp.drawBall(x, y, width, height);
 	}
+	
 	/**
-	 * @author Julius Knoller 
+	 * method to draw the Bat
+	 * @author Maximilian Heinze, Julius Knoller 
 	 * @param x
 	 * @param y
 	 * @param width
@@ -69,12 +74,10 @@ public class GameFrame extends JFrame {
 	 */
 	public void drawBat(int x, int y, int width, int height)
 	{
-		getContentPane().add(new BatDisplay(x, y, width, height));
-		revalidate();
-		repaint();
+		gp.drawBat(x, y, width, height);
+
 	}
 		
-
 	/**
 	 * Method to add a keylistener to the gameframe.
 	 * @author Maximilian Heinze
@@ -82,19 +85,21 @@ public class GameFrame extends JFrame {
 	 */
 	public void addMyKeyListener(MyKeyListener keyL)
 	{
-		addKeyListener(keyL);
+		frame.addKeyListener(keyL);
 	}
+	
 	/**
-	 * removes all drawn objects.
+	 * Method to remove all drawn objects.
 	 * get started when the a new timer is created.
 	 *  @author Maximilian Heinze
 	 */
-	public void emptyContentPane()
-	{
-		getContentPane().removeAll();
-	}
+//	public void emptyContentPane()
+//	{
+//		frame.getContentPane().removeAll();
+//	}
+	
 	/**
-	 * opens the GameWonDialog if you have won the game and creates GameOverDialog if you have lost the game.
+	 * Method to create either a GameWonDialog or a GameOverDialog
 	 * @author Maximilian Heinze
 	 * @param gameWon
 	 */
@@ -102,29 +107,48 @@ public class GameFrame extends JFrame {
 	{
 		if(gameWon){
 			gameIsWon = new GameWonDialog();
+			isGameWonDialogShown = true;
 		}else{
 			gameIsLost = new GameOverDialog();
+			isGameOverDialogShown = true;
 		}
 	}
+	
 	/**
-	 * gives the parameter to add the Listener in the GameOverDialog
-	 *  @author Maximilian Heinze
-	 * @param medl
-	 */
-	public GameOverDialog addListenerOnGameOverDialogButtons(MyEndDialogListener medl)
-	{
-		gameIsLost.addListenerOnGameOverDialogButtons(medl);
-		return gameIsLost;
-	}
-	/**
-	 * gives the parameter to add the Listener in the GameOverDialog
+	 * Method to add the Listener in the GameOverDialog
 	 * @author Maximilian Heinze
 	 * @param medl
 	 */
-	public GameWonDialog addListenerOnGameWonDialogButtons(MyEndDialogListener medl)
+	public void addListenerOnGameOverDialogButtons(MyEndDialogListener medl)
 	{
-		gameIsWon.addListenerOnGameWonDialogButtons(medl);
-		return gameIsWon;
+		gameIsLost.addListenerOnGameOverDialogButtons(medl);
 	}
 	
+	/**
+	 * Method to add the Listener in the GameWonDialog
+	 * @author Maximilian Heinze
+	 * @param medl
+	 */
+	public void addListenerOnGameWonDialogButtons(MyEndDialogListener medl)
+	{
+		gameIsWon.addListenerOnGameWonDialogButtons(medl);
+	}
+	
+	/**
+	 * Closes any dialogs if opened
+	 * @author René Marton, Tim Möschl
+	 */
+	public void disposeDialog()
+	{
+		if(isGameOverDialogShown)
+		{
+			gameIsLost.dispose();
+			isGameOverDialogShown = false;
+		}
+		if(isGameWonDialogShown)
+		{
+			gameIsWon.dispose();
+			isGameWonDialogShown = false;
+		}
+	}
 }

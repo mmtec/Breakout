@@ -3,23 +3,17 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 /**
  * Opens the Dialog when you want to close the Game in the Menuframe.
- * @author maximilian.heinze
- *
+ * @author Maximilian Heinze
  */
 public class EndDialog extends JDialog 
 {
@@ -29,20 +23,6 @@ public class EndDialog extends JDialog
 	private JLabel txtDasSpielWird;
 	JButton cancelButton = new JButton("Cancel");
 	JButton okButton = new JButton("OK");
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) 
-	{
-		try {
-			EndDialog dialog = new EndDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
@@ -93,8 +73,9 @@ public class EndDialog extends JDialog
 		}
 		setVisible(true);
 	}
+	
 	/**
-	 * adds a Buttonlistener to the JButtons of the EndDialog.
+	 * Method to add a Buttonlistener to the JButtons of the EndDialog.
 	 * @author Maximilian Heinze
 	 * @param listener
 	 */

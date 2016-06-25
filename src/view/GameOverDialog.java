@@ -17,7 +17,6 @@ import controller.Controller.MyEndDialogListener;
  * Opens a Dialog where you close the game or start a new game.
  * @date 22.06.2016
  * @author Maximilian Heinze
- *
  */
 public class GameOverDialog extends JDialog {
 
@@ -27,21 +26,9 @@ public class GameOverDialog extends JDialog {
 	private JButton endGame = new JButton("Spiel Beenden");
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			GameOverDialog dialog = new GameOverDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * @date 22.06.2016
 	 * Create the dialog.
+	 * @author Maximilian Heinze
+	 * @date 22.06.2016
 	 */
 	public GameOverDialog() 
 	{
@@ -51,6 +38,7 @@ public class GameOverDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		txtGameOverNeues = new JLabel();
 		txtGameOverNeues.setText("Sie haben verloren. Neues Spiel starten?");
+		setResizable(false);
 		
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -86,7 +74,10 @@ public class GameOverDialog extends JDialog {
 			}
 			setVisible(true);
 	}
+	
 	/**
+	 * Method to add an Actionlistener to the Buttons in the GameOverdialog
+	 * @author Maximilian Heinze
 	 * @date 22.06.2016
 	 * @param medl
 	 */

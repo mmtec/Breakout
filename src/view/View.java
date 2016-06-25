@@ -22,12 +22,14 @@ public class View {
 	private GameFrame gf;
 	private ManualFrame manf;
 	private Model model;
-	
+		
 	public View(Model model){
 		this.model = model;
 		mf = new MenuFrame();
 	}
+	
 	/**
+	 * Method to return the width of the MenuFrame
 	 * @author Maximilian Heinze
 	 * @return
 	 */
@@ -35,15 +37,20 @@ public class View {
 	{
 		return mf.getWidth();
 	}
+	
 	/**
+	 * Method to return the height of the MenuFrame
 	 * @author Maximilian Heinze
+	 * @return
 	 */
 	public int getHeight()
 	{
 		return mf.getHeight();
 	}
+	
 	/**
-	 * author Maximilian Heinze
+	 * Method to change from MenuFrame to GameFrame
+	 * @author Maximilian Heinze
 	 */
 	public void changeToGameFrame()
 	{
@@ -51,6 +58,7 @@ public class View {
 	}
 	
 	/**
+	 * Method to draw the Bat
 	 * @author Maximilian Heinze
 	 * @param x
 	 * @param y
@@ -61,7 +69,9 @@ public class View {
 	{
 		gf.drawBat(x, y, width, height);
 	}
+	
 	/**
+	 * Method to draw the Bricks
 	 * @author Maximilian Heinze
 	 * @param x
 	 * @param y
@@ -72,7 +82,9 @@ public class View {
 	{
 		gf.drawBrick(x, y, width, height);
 	}
+	
 	/**
+	 * Method to draw the Ball
 	 * @author Maximilian Heinze
 	 * @param x
 	 * @param y
@@ -83,7 +95,9 @@ public class View {
 	{
 		gf.drawBall(x, y, width, height);
 	}
+	
 	/**
+	 * Method to add a KeyListener to the GameFrame
 	 * @author Maximilian Heinze
 	 * @param keyL
 	 */
@@ -91,7 +105,9 @@ public class View {
 	{
 		gf.addMyKeyListener(keyL);
 	}
+	
 	/**
+	 * Method to add a WindowListener to the MenuFrame
 	 * @author Maximilian Heinze
 	 * @param winA
 	 */
@@ -99,7 +115,9 @@ public class View {
 	{
 		mf.addMyWindowListener(winA);
 	}
+	
 	/**
+	 * Method to add a ButtonListener on all JButtons on the MenuFrame
 	 * @author Maximilian Heinze	
 	 * @param mbl
 	 */
@@ -107,13 +125,14 @@ public class View {
 	{
 		mf.setButtonsListener(mbl);
 	}
+	
 	/**
+	 * Method to take the elements of the array and looks whether it's a ball, a brick, or a bat and draws it
 	 * @author Tim Möschl, René Marton, Maximilian Heinze, Julius Knoller
-	 * takes the elements of the array and looks whether it's a ball, a brick, or a bat and draws it.
+	 * 
 	 */
 	public void drawListElements()
 	{
-		gf.emptyContentPane();
 		ArrayList<Component> list = model.returnList();
 		for(int i = 0; i < list.size(); i++)
 		{
@@ -134,22 +153,27 @@ public class View {
 			}
 		}
 	}
+	
 	/**
+	 * Method to add an EndDialogListener to the GameFrame
 	 * @author Maximilian Heinze
 	 * @param medl
 	 */
-	public GameOverDialog addListenerOnGameOverDialogButtons(MyEndDialogListener medl)
+	public void addListenerOnGameOverDialogButtons(MyEndDialogListener medl)
 	{
-		return gf.addListenerOnGameOverDialogButtons(medl);
+		gf.addListenerOnGameOverDialogButtons(medl);
 	}
+	
 	/**
+	 * Method to add an EndDialoglistener to the GameFrame
 	 * @author Maximilian Heinze
 	 * @param medl
 	 */
-	public GameWonDialog addListenerOnGameWonDialogButtons(MyEndDialogListener medl)
+	public void addListenerOnGameWonDialogButtons(MyEndDialogListener medl)
 	{
-		return gf.addListenerOnGameWonDialogButtons(medl);
+		gf.addListenerOnGameWonDialogButtons(medl);
 	}
+	
 	/**
 	 * Method to open a JDialog which says whether you have won or not
 	 * @author Maximilian Heinze
@@ -158,6 +182,11 @@ public class View {
 	public void showGameFinDialog(boolean gameWon)
 	{
 		gf.showGameFinDialog(gameWon);
+	}
+	
+	public void disposeDialog()
+	{
+		gf.disposeDialog();
 	}
 	
 }
