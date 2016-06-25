@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 
 import javax.swing.GroupLayout;
@@ -27,21 +28,9 @@ public class GameWonDialog extends JDialog {
 	private JButton endGame = new JButton("Spiel Beenden");
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			GameOverDialog dialog = new GameOverDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * Create the dialog.
 	 * @author Maximilian Heinze
+	 * @date 22.06.2016
 	 */
 	public GameWonDialog() {
 		setBounds(100, 100, 450, 300);
@@ -50,6 +39,7 @@ public class GameWonDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		txtGameOverNeues = new JLabel();
 		txtGameOverNeues.setText("Sie haben gewonnen. Neues Spiel starten?");
+		setResizable(false);
 		
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -85,12 +75,13 @@ public class GameWonDialog extends JDialog {
 		}
 		setVisible(true);
 	}
-		/**
-		 * Methode to add a Buttonlistener on the JButtons in the Dialog.
-		 * @date 22.06.2016
-		 * @author Maximilian Heinze
-		 * @param medl
-		 */
+	
+	/**
+	 * Methode to add a Buttonlistener on the JButtons in the Dialog.
+	 * @date 22.06.2016
+	 * @author Maximilian Heinze
+	 * @param medl
+	 */
 		public void addListenerOnGameWonDialogButtons(MyEndDialogListener medl){
 			{
 				endGame.addActionListener(medl);

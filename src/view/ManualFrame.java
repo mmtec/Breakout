@@ -1,40 +1,31 @@
 package view;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
+import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 
-
+/**
+ * Class where you can read the Manual
+ * @date 23.06.2016
+ * @author Maximilian Heinze
+ *
+ */
 public class ManualFrame extends JFrame {
 
 	private JPanel contentPane;
 	private int width = 807;
 	private int height = 807;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ManualFrame frame = new ManualFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
+	 * @date 23.06.2016
+	 * @author Maximilian Heinze
 	 */
 	public ManualFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

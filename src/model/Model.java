@@ -14,8 +14,8 @@ public class Model {
 		
 	private Brick[][] b = new Brick[100][100];
 	private Brick def = new Brick(0, 0, 80, 30);
-	private int bwidth = def.getWidth();
-	private int bheight = def.getHeight();
+	private int bwidth = Constants.BRICK_WIDTH;
+	private int bheight = Constants.BRICK_HEIGHT;
 	
 	private Ball ball;
 	private Bat bat;
@@ -24,8 +24,8 @@ public class Model {
 	public void start() {
 		int bwidth = def.getWidth();
 		int bheight = def.getHeight();
-		ball = new Ball(gwidth/2-10, gheight/3 + 20, 20, 20);
-		bat = new Bat(gwidth/2 - 80, gheight - 40, 160, 20);
+		ball = new Ball(Constants.BALL_X, Constants.BALL_Y, Constants.BALL_WIDTH, Constants.BALL_HEIGHT);
+		bat = new Bat(Constants.BAT_X, Constants.BAT_Y, Constants.BAT_WIDTH, Constants.BAT_HEIGHT);
 		for(int y = 0; y < gheight / 3; y+= bheight+10) {
 			for(int x = 0; x < gwidth; x+= bwidth+10) {
 				b[x/(bwidth+10)][y/(bheight+10)] = new Brick(x, y, 80, 30);
@@ -72,13 +72,11 @@ public class Model {
 	}
 	
 	public void moveBat(boolean right, int px) {
-		
-		if(right) {
+		if(right && bat.getX() + bat.getWidth() <= 807 ) {
 			bat.setX(bat.getX() + px);
-		} else {
-			bat.setX(bat.getX() - px);
-		}
-		
+	    } if(!right && bat.getX() >= 0 ){
+	    	bat.setX(bat.getX() - px);
+	    }
 	}
 	
 	public void refreshBallPosition() {
@@ -96,7 +94,7 @@ public class Model {
 	
 	//für die Methode touches wall return int -1 falls nicht und 1 falls es die linke oder die rechte wand berührt und 2 falls es die obere berührt
 	public int touchesWall(){
-		if(ball.getX() <= 0 || ball.getX() >= 800){ // linke bzw. rechte Wand berührt
+		if(ball.getX() <= 0 || ball.getX() + ball.getWidth() >= 800){ // linke bzw. rechte Wand berührt
 			return 1;
 		}
 		if(ball.getY() <= 0){  // obere Wand
@@ -124,7 +122,7 @@ public class Model {
 	 */
 	
 	public boolean touchesBat() {
-		if(ball.getX() + ball.getWidth() - bat.getX() >= 0 && ball.getX() - (bat.getX() + bat.getWidth()) <= bat.getWidth() && ball.getY() + ball.getHeight() >= bat.getY()){
+		if(ball.getX() + ball.getWidth() >= bat.getX() && ball.getX() <= bat.getWidth() + bat.getX() && ball.getY() + ball.getHeight() >= bat.getY()){
 			return true;
 		}
 		return false;
@@ -147,7 +145,6 @@ public class Model {
 				touchesBrick[0] = x;
 				touchesBrick[1] = y;
 				touchesBrick[2] = 1;
-				System.out.println(touchesBrick[2]+"");
 				return touchesBrick;	
 				
 			}else if(vonRechts(x, y)){ 
@@ -155,7 +152,6 @@ public class Model {
 				touchesBrick[0] = x;
 				touchesBrick[1] = y;
 				touchesBrick[2] = 1;
-				System.out.println(touchesBrick[2]+"");
 				return touchesBrick;
 			
 			}else if(vonUnten(x, y)){
@@ -163,7 +159,6 @@ public class Model {
 					touchesBrick[0] = x;
 					touchesBrick[1] = y;
 					touchesBrick[2] = 2;
-					System.out.println(touchesBrick[2]+"");
 					return touchesBrick;
 							
 				}else if(vonOben(x, y)){
@@ -171,7 +166,6 @@ public class Model {
 					touchesBrick[0] = x;
 					touchesBrick[1] = y;
 					touchesBrick[2] = 2;
-					System.out.println(touchesBrick[2]+"");
 					return touchesBrick;
 				}
 			}
