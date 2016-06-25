@@ -3,8 +3,6 @@ package view.components;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JComponent;
-
 public class BrickDisplay extends Display
 {
 	private int x, y, width, height;

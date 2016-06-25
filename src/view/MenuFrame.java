@@ -12,12 +12,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller.MyButtonListener;
-import controller.Controller.MyKeyListener;
 import controller.Controller.MyWindowAdapter;
 /**
- * 
- * @author maximilian.heinze
- *
+ * Class to create a MenuFrame where you can quit the game, start a new game or read the Manual
+ * @author Maximilian Heinze
  */
 public class MenuFrame extends JFrame {
 
@@ -29,24 +27,10 @@ public class MenuFrame extends JFrame {
 	private JButton startButton = new JButton("Spiel Starten");
 	private JButton manualButton = new JButton("Anleitung");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-				MenuFrame frame = new MenuFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
+	 * @author Maximilian Heinze
 	 */
 	public MenuFrame() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -94,12 +78,20 @@ public class MenuFrame extends JFrame {
 		setVisible(true);
 	}
 	
+	/**
+	 * Method to add a WindowListener to the MenuFrame
+	 * @author Maximilian Heinze
+	 * @param wa
+	 */
 	public void addMyWindowListener(MyWindowAdapter wa){
 		addWindowListener(wa);
 	}
 	
-	
-	
+	/**
+	 * Method to add a Buttonlistener to all Jbuttons in the MEnuFrame
+	 * @author Maximilian Heinze
+	 * @param mbl
+	 */
 	public void setButtonsListener(MyButtonListener mbl)
 	{
 		startButton.addActionListener(mbl);
@@ -107,6 +99,11 @@ public class MenuFrame extends JFrame {
 		manualButton.addActionListener(mbl);
 	}
 	
+	/**
+	 * Method to change from the MenuFrame to the GameFrame
+	 * @author Maximilian Heinze
+	 * @return new GameFrame returned
+	 */
 	public GameFrame changeToGameFrame()
     {
 		dispose();
