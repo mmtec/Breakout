@@ -12,8 +12,6 @@ import javax.swing.JButton;
 
 import model.Model;
 import view.EndDialog;
-import view.GameOverDialog;
-import view.GameWonDialog;
 import view.View;
 
 /**
@@ -33,11 +31,8 @@ public class Controller
 	private View view;
 	final Controller controller;
 	private Timer timer;
-	private final int timerFrequence = 35;
-	
-	private GameWonDialog gwd;
-	private GameOverDialog god;
-	
+	private final int timerFrequence = 40;
+		
 	/**
 	 * @date 09.05.2016
 	 * 
@@ -74,7 +69,7 @@ public class Controller
 							model.moveBat(true, 20);
 						break;
 					case KeyEvent.VK_LEFT:
-						vk_right_pressed = true;
+						vk_left_pressed = true;
 							model.moveBat(false, 20);
 						break;
 				}
@@ -166,8 +161,7 @@ public class Controller
 					view.changeToGameFrame();
 					view.addKeyListener(new MyKeyListener());
 					model.start();
-					//Start at the beginning, then run every 30 ms.
-					timer.schedule(new MyTask(controller, model, view), 0, timerFrequence);
+					timer.schedule(new MyTask(controller, model, view), 300, timerFrequence);
 					break;
 			
 				case "Anleitung":
@@ -190,7 +184,7 @@ public class Controller
 			{
 			case "Neues Spiel starten":
 				model.start();
-//				view.disposeDialog();
+				view.disposeDialog();
 				timer = new Timer();
 				timer.schedule(new MyTask(controller, model, view), 1000, timerFrequence);							
 				break;
@@ -207,7 +201,7 @@ public class Controller
 	 */
 	public void addListenerOnGameOverDialogButtons()	
 	{
-		god = view.addListenerOnGameOverDialogButtons(new MyEndDialogListener());	
+		view.addListenerOnGameOverDialogButtons(new MyEndDialogListener());	
 	}
 	
 	/**
@@ -215,7 +209,7 @@ public class Controller
 	 */
 	public void addListenerOnGameWonDialogButtons()
 	{
-		gwd = view.addListenerOnGameWonDialogButtons(new MyEndDialogListener());
+		view.addListenerOnGameWonDialogButtons(new MyEndDialogListener());
 	}
 
 	/**

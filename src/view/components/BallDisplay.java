@@ -18,9 +18,9 @@ public class BallDisplay extends JComponent
 	}
 	
 	@Override
-	public void paint(Graphics g)
+	public void paintComponents(Graphics g)
 	{
-		super.paintComponent(g);
+		super.paintComponents(g);
 		g.setColor(Color.WHITE);
 		g.fillOval(x, y, width, height);
 	}
